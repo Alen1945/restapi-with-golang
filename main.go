@@ -6,9 +6,18 @@ import (
 	"net/http"
 	"os"
 	"restTodoApp/handlers"
+	"restTodoApp/postgres"
+
+	"github.com/go-pg/pg/v9"
 )
 
 func main() {
+	DB := postgres.New(&pg.Options{
+		User:     "belajar",
+		Password: "12345678",
+		Database: "db_belajar_golang",
+	})
+	defer DB.Close()
 	app := handlers.SetupRouter()
 	port := os.Getenv("PORT")
 	if port == "" {
